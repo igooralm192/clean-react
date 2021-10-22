@@ -2,3 +2,4 @@ node_modules
 .vscode
 jest.config.js
 tsconfig.json
+.lintstagedrc.json
