@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "target": "es6", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,11 +18,7 @@
       ]
     },
     "allowJs": true, /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
     "resolveJsonModule": true, /* Enable importing .json files */
-    "noEmit": true,
   },
   "include": [
     "src"
