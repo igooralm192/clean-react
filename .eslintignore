@@ -4,3 +4,5 @@ jest.config.js
 tsconfig.json
 .lintstagedrc.json
 public
+webpack.config.js
+*.scss
