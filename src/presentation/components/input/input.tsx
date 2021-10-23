@@ -6,17 +6,17 @@ import Styles from './input-styles.scss'
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 const Input: React.FC<Props> = (props) => {
-  const { state: { [`${props.name}Error`]: error }, setState } = useContext(Context)
+  const { state, setState } = useContext(Context)
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
-    setState(state => ({
+    setState(({
       ...state,
       [event.target.name]: event.target.value
     }))
   }
 
   const getTitle = (): string => {
-    return error
+    return state[`${props.name}Error`]
   }
 
   const getStatus = (): string => {
