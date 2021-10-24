@@ -4,25 +4,42 @@ import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react
 
 import { ValidationStub } from '@/presentation/test'
 import Login from './login'
+import { Authentication, AuthenticationParams } from '@/domain/usecases'
+import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
   sut: RenderResult
   validationStub: ValidationStub
+  authenticationSpy: AuthenticationSpy
 }
 
 type SutParams = {
   validationError: string
 }
 
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel()
+  params: AuthenticationParams
+
+  async auth (params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params
+    return Promise.resolve(this.account)
+  }
+}
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
 
-  const sut = render(<Login validation={validationStub} />)
+  const authenticationSpy = new AuthenticationSpy()
+
+  const sut = render(<Login validation={validationStub} authentication={authenticationSpy} />)
 
   return {
     sut,
-    validationStub
+    validationStub,
+    authenticationSpy
   }
 }
 
@@ -121,5 +138,23 @@ describe('Login Component', () => {
 
     const spinner = screen.getByTestId('spinner')
     expect(spinner).toBeTruthy()
+  })
+
+  test('Should call Authentication with correct values', () => {
+    const { sut: screen, authenticationSpy } = makeSut()
+
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+
+    const emailInput = screen.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: email } })
+
+    const passwordInput = screen.getByTestId('password')
+    fireEvent.input(passwordInput, { target: { value: password } })
+
+    const submitButton = screen.getByTestId('submit') as HTMLButtonElement
+    fireEvent.click(submitButton)
+
+    expect(authenticationSpy.params).toEqual({ email, password })
   })
 })
