@@ -1,4 +1,4 @@
-import { FieldValidation } from '../protocols'
+import { FieldValidation } from '../../protocols'
 
 export class RequiredFieldValidation implements FieldValidation {
   constructor (readonly name: string) {}
