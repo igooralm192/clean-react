@@ -12,7 +12,7 @@ import {
 } from '@testing-library/react'
 
 import { AuthenticationSpy, ValidationStub } from '@/presentation/test'
-import Login from './login'
+import { Login } from '@/presentation/pages'
 import { InvalidCredentialsError } from '@/domain/errors'
 
 type SutTypes = {
